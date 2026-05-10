@@ -20,7 +20,7 @@ See [action.yml](action.yml)
 - uses: reconcilerio/install-kind-action@v1
   with:
     # Optional version.
-    # The kind version to install. Resolved as a reference from the sigs.kubernetes.io/kind package.
+    # The kind version to install. Resolved as a reference in the sigs.k8s.io/kind module.
     # Default: 'latest'
     version: ''
 ```
