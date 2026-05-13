@@ -34,7 +34,7 @@ runs:
     uses: reconcilerio/go-install-action@v1
     with:
       package: sigs.k8s.io/kind
-      version: "@${{ inputs.version }}"
+      version: "${{ inputs.version }}"
       output-dir: /usr/local/bin
   - name: kind version
     run: |
