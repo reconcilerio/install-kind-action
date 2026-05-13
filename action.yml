@@ -31,12 +31,11 @@ runs:
     continue-on-error: true
   - name: Build kind, if unable to download
     if: steps.download-kind.outcome == 'failure'
-    run: |
-      set -euo pipefail
-
-      go install sigs.k8s.io/kind@${{ inputs.version }}
-      cp $(go env GOPATH)/bin/kind /usr/local/bin
-    shell: bash
+    uses: reconcilerio/go-install-action@v1
+    with:
+      package: sigs.k8s.io/kind
+      version: "@${{ inputs.version }}"
+      output-dir: /usr/local/bin
   - name: kind version
     run: |
       set -euo pipefail
