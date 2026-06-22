@@ -5,6 +5,7 @@
 Install the kind CLI for the requested version. Attempts to fetch pre-built binaries from the GitHub releases page, or builds from source if a build version is not found.
 
 - [Usage](#usage)
+- [Nested actions](#nested-actions)
 - [Community](#community)
   - [Code of Conduct](#code-of-conduct)
   - [Communication](#communication)
@@ -35,6 +36,10 @@ steps:
 ```
 
 When building from source, an appropriate go toolchain is required. If unsure, favor a more recent toolchain version.
+
+## Nested actions
+- [`reconcilerio/install-kind-action/cloud-provider-kind`](./cloud-provider-kind/) Install cloud-provider-kind
+
 
 ## Community
 

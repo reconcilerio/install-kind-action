@@ -1,0 +1,43 @@
+name: "install-cloud-provider-kind"
+description: "Installs cloud-provider-kind CLI"
+inputs:
+  version:
+    description: cloud-provider-kind version to install
+    default: latest
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - name: Download cloud-provider-kind
+    id: download-cloud-provider-kind
+    run: |
+      set -euo pipefail
+
+      version="${{ inputs.version }}"
+      os="$(go env GOOS)"
+      arch="$(go env GOARCH)"
+
+      if [[ "${version}" == "latest" ]]; then
+        version=$(curl -s https://api.github.com/repos/kubernetes-sigs/cloud-provider-kind/releases/latest | jq -r .tag_name)
+      fi
+
+      url="https://github.com/kubernetes-sigs/cloud-provider-kind/releases/download/${version}/cloud-provider-kind_${version:1}_${os}_${arch}.tar.gz"
+
+      echo "Downloading ${url}"
+      curl --fail -sL "${url}" | tar -zxvf - -C /usr/local/bin/ cloud-provider-kind
+    shell: bash
+    continue-on-error: true
+  - name: Build cloud-provider-kind, if unable to download
+    if: steps.download-cloud-provider-kind.outcome == 'failure'
+    uses: reconcilerio/go-install-action@v1
+    with:
+      package: sigs.k8s.io/cloud-provider-kind
+      version: "${{ inputs.version }}"
+      output-dir: /usr/local/bin
+  - name: cloud-provider-kind test
+    run: |
+      set -euo pipefail
+
+      echo "installed to: $( which cloud-provider-kind )"
+      cloud-provider-kind --help
+    shell: bash
