@@ -24,9 +24,15 @@ jobs:
         - os: macos-26-intel
         - with:
             version: latest
+          with-cloud-provider-kind:
+            version: latest
         - with:
             version: v0.30.0
+          with-cloud-provider-kind:
+            version: v0.9.0
         - with:
+            version: main
+          with-cloud-provider-kind:
             version: main
     runs-on: ${{ matrix.os || 'ubuntu-latest' }}
     steps:
@@ -36,3 +42,5 @@ jobs:
         go-version: stable
     - uses: ./
       with: ${{ matrix.with || fromJson('{}') }}
+    - uses: ./cloud-provider-kind/
+      with: ${{ matrix.with-cloud-provider-kind || fromJson('{}') }}
