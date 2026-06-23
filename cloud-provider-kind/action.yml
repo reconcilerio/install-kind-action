@@ -9,7 +9,6 @@ runs:
   using: "composite"
   steps:
   - name: Build cloud-provider-kind, if unable to download
-    if: steps.download-cloud-provider-kind.outcome == 'failure'
     uses: reconcilerio/go-install-action@v1
     with:
       package: sigs.k8s.io/cloud-provider-kind
