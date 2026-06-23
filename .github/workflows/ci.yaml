@@ -42,5 +42,17 @@ jobs:
         go-version: stable
     - uses: ./
       with: ${{ matrix.with || fromJson('{}') }}
+    - name: kind version
+      run: |
+        set -euo pipefail
+
+        echo "installed to: $( which kind )"
+        echo "kind version: $( kind --version )"
     - uses: ./cloud-provider-kind/
       with: ${{ matrix.with-cloud-provider-kind || fromJson('{}') }}
+    - name: cloud-provider-kind test
+      run: |
+        set -euo pipefail
+
+        echo "installed to: $( which cloud-provider-kind )"
+        cloud-provider-kind --help
